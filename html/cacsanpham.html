@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Document</title>
+</head>
+</html>
+<body>
+    <h1> CÁC SẢN PHẨM</h1>
+    <div id='product_list'></div>
+    <button id="add" onclick="add()"> Add</button>
+    <button id="edit" onclick="edit()"> Edit</button>
+    <button id="del" onclick="del()"> Delete</button>
+    <script>
+        let ds=['Bánh','Sữa','Kem'];
+        function show(){
+            var s='';
+            for(var i=0; i<ds.length; i++){
+                s = s + (i+1) + "." + ds [i] + "<br>";
+            }
+            return s;
+        }
+        function add(){
+            var newProduct = prompt("Nhập tên sản phẩm mới: ");
+            ds.push(newProduct);
+            document.getElementById('product_list').innerHTML=show();
+        }
+        function edit(){
+            var index=prompt("Nhập thứ tự sản phẩm cần chỉnh sửa:");
+            var newName=prompt("Nhập tên sản phẩm mới:");
+            if (index>0 && index <=ds.length){
+                ds[index-1]= newName;
+            } 
+            else{
+                alert ("Vị trí không hợp lệ!");
+            } 
+            document.getElementById('product_list').innerHTML=show();
+        }
+        function del(){
+            var index=prompt("Nhập thứ tự sản phẩm cần xóa:");
+            if (index>0 && index <=ds.length){
+                ds.splice(index-1,1);
+                document.getElementById('product_list').innerHTML=show();
+            } 
+        }
+        document.getElementById('product_list').innerHTML=show();
+    </script>
+</body>

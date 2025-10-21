@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lí Sản Phẩm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        .add-product-section .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        #newProductName {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #addProductBtn {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        #displayTitle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        #productCount {
+            font-weight: normal;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        #productTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #productTable th,
+        #productTable td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #productTable thead th {
+            background-color: #f9f9f9;
+            font-weight: bold;
+            color: #555;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            margin-left: 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .edit-btn {
+            background-color: blue;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color:red;
+            color: white;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 5px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #editProductNameInput {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #saveEditBtn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản Lí Sản Phẩm</h1>
+
+        <div class="card add-product-section">
+            <h2>Add New Product</h2>
+            <div class="input-group">
+                <input type="text" id="newProductName" placeholder="New Product">
+                <button id="addProductBtn">Add</button>
+            </div>
+        </div>
+        <div class="card display-product-section">
+            <h2 id="displayTitle">Display All Product <span id="productCount">0</span> products</h2>
+            <table id="productTable">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Chỉnh Sửa Sản Phẩm</h2>
+            <input type="text" id="editProductNameInput">
+            <button id="saveEditBtn">Lưu</button>
+        </div>
+    </div>
+
+    <script>let products = [
+            'Sony Xperia',
+            'Samsung Galaxy',
+            'Nokia 6',
+            'Xiaomi Redmi Note 4',
+            'Apple iPhone 6S',
+            'Xiaomi Mi 5s Plus',
+            'Apple iPhone 8 Plus',
+            'Fujitsu F-04E',
+            'Oppo A71'
+        ];
+
+        const productTableBody = document.getElementById('productTableBody');
+        const productCountSpan = document.getElementById('productCount');
+        const newProductNameInput = document.getElementById('newProductName');
+        const addProductBtn = document.getElementById('addProductBtn');
+
+        const editModal = document.getElementById('editModal');
+        const closeBtn = document.querySelector('.close-btn');
+const editProductNameInput = document.getElementById('editProductNameInput');
+        const saveEditBtn = document.getElementById('saveEditBtn');
+
+        let editingIndex = -1;
+        function renderProducts() {
+            productTableBody.innerHTML = ''; // Xóa nội dung cũ
+
+            products.forEach((productName, index) => {
+                const row = productTableBody.insertRow();
+                const nameCell = row.insertCell(0);
+                const editCell = row.insertCell(1);
+                const deleteCell = row.insertCell(2);
+                nameCell.textContent = productName;
+                const editBtn = document.createElement('button');
+                editBtn.textContent = 'Edit';
+                editBtn.className = 'action-btn edit-btn';
+                editBtn.onclick = () => openEditModal(index);
+                editCell.appendChild(editBtn);
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.className = 'action-btn delete-btn';
+                deleteBtn.onclick = () => deleteProduct(index);
+                deleteCell.appendChild(deleteBtn);
+            })
+        }
+        function deleteProduct(index) {
+            if (confirm(`Bạn có chắc chắn muốn xóa sản phẩm "${products[index]}" không?`)) {
+                products.splice(index, 1);
+                renderProducts();
+            }
+        }
+        function addProduct() {
+            const newName = newProductNameInput.value.trim();
+            if (newName) {
+                products.push(newName);
+                newProductNameInput.value = '';
+                renderProducts();
+            } else {
+                alert('Vui lòng nhập tên sản phẩm.');
+            }
+        }
+        addProductBtn.addEventListener('click', addProduct);
+
+        function openEditModal(index) {
+            editProductNameInput.value = products[index];
+            editModal.style.display = 'block';
+            editingIndex = index;
+        }
+
+        function closeEditModal() {
+            editModal.style.display = 'none';
+            editingIndex = -1;
+        }
+        closeBtn.onclick = closeEditModal;
+        window.onclick = (event) => {
+            if (event.target == editModal) {
+                closeEditModal();
+            }
+        }
+        saveEditBtn.onclick = () => {
+            const newName = editProductNameInput.value.trim();
+            if (newName && editingIndex !== -1) {
+                products[editingIndex] = newName;
+                renderProducts();
+                closeEditModal();
+            } else if (!newName) {
+                alert('Tên sản phẩm không được để trống.');
+            }
+        }
+    </script>
+</body>
+
+</html>

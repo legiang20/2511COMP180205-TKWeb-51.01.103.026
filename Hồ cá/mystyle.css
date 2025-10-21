@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-image 1s ease;
+}
+
+#content img {
+  width: 150px;
+  height: auto;
+}
+
+#controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+button {
+  background-color: #00bfff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #007acc;
+  transform: scale(1.05);
+}
+
+.creature {
+  position: absolute;
+  animation: swim 10s linear infinite;
+}
+
+@keyframes swim {
+  0% { left: -200px; transform: scaleX(1); }
+  40% { left: 50vw; top: 300px; }
+  80% { left: 90vw; top: 100px; transform: scaleX(1); }
+  100% { left: -200px; top: 400px; transform: scaleX(-1); }
+}
+
+#shark { animation-duration: 8s; top: 400px; }
+#turtle { animation-duration: 15s; top: 500px; }
+#goldFishSchool { animation-duration: 12s; top: 350px; }
+#diver1 { animation-duration: 18s; top: 200px; }
+#diver2 { animation-duration: 16s; top: 250px; }
+#diver3 { animation-duration: 20s; top: 300px; }
+#faintSchool { animation-duration: 10s; top: 150px; }
+

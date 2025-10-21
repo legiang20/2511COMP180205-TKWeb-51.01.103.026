@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8"/>
+    <title> Chia layout</title>
+    <style>
+        .a,.b,.c,.d,.e,.f{
+            border:0px;
+            border-style: solid;
+            padding:20px;
+        }
+        .container{
+            display: grid;
+            grid-template-columns: 30% 30% 30%;
+            width:1200px;
+            column-gap: 10px;
+            row-gap:20px;
+        }
+        .container1{
+            display: grid;
+            grid-template-columns: 30% 60%;
+            column-gap: 10px;
+            width:1200px;
+        }
+        .container2{
+            display: grid;
+            grid-template-columns: 30% 60%;
+            column-gap: 10px;
+            width:1200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="a", style="background-color:lightblue">
+            A
+        </div>
+        <div class="b", style="background-color:lightcoral">
+            B
+        </div>
+        <div class="d", style="background-color:lightgoldenrodyellow">
+            D
+        </div>
+    </div>
+    <div class="container1">
+        <div class="e", style="background-color:lightpink">
+            E
+        </div>
+        <div class="c", style="background-color:lightgreen">
+            C
+        </div>
+   </div>
+    <div class="container2">
+        <div class="f", style="background-color:lightgrey">
+            F
+        </div>
+        <div class="c", style="background-color:lightgreen">
+            
+        </div>
+    </div>
+</body>

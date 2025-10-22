@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng Ký - Halloween Horror Night</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <audio id="music" loop><source src="./halloween.mp3" type="audio/mp3"></audio>
+
+    <div class="container">
+        <header>
+            <div class="logo"> <a href="./intro.html">💀 HALLOWEEN 🎃</a> </div>
+            <nav>
+                <a href="index.html">THIỆP MỜI</a>
+                <a href="gioithieu.html">GIỚI THIỆU NHÓM</a>
+                <a href="lichsu.html">LỊCH SỬ</a>
+                <a href="sanpham.html">SẢN PHẨM</a>
+                <a href="bosuutap.html">BỘ SƯU TẬP</a>
+                <a href="dangky.html" class="active">ĐĂNG KÝ</a>
+                <a href="lienhe.html">LIÊN HỆ</a>
+            </nav>
+            <button id="nhac">🎵 Bật/Tắt Nhạc</button>
+        </header>
+
+        <main>
+            <section id="registrationform" class="card">
+                <h2 class="heading">Xác Nhận Tham Dự Tiệc</h2>
+                
+                <form id="form" class="horrorform">
+                    <label for="regname">Họ và Tên Quý Khách:</label>
+                    <input type="text" id="regname" required placeholder="Ví dụ: HannaLe">
+                    
+                    <label for="regemail">Email Liên Hệ:</label>
+                    <input type="email" id="regemail" required placeholder="Ví dụ: legiang.huong20@gmail.com">
+                    
+                    <label for="regcostume">Trang Phục Dự Kiến:</label>
+                    <select id="regcostume">
+                        <option value="macarong">Ma Cà Rồng</option>
+                        <option value="xacsong">Xác Sống </option>
+                        <option value="bingo">Bí ngô </option>
+                        <option value="khac">Khác</option>
+                    </select>
+                    
+                    <button type="submit" class="ctabutton">Đăng Ký Tham Gia</button>
+                </form>
+            </section>
+        </main>
+
+        <footer><p> HALLOWEEN PROJECT WITH LHG</p></footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

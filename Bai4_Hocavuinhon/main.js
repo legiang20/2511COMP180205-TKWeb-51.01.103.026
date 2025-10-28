@@ -1,4 +1,3 @@
-
 const music = document.getElementById("nhac");
 const musicBtn = document.getElementById("music");
 
@@ -20,6 +19,11 @@ const backgrounds = [
 
 let currentBg = 0;
 const bgBtn = document.getElementById("change");
+
+document.body.style.backgroundImage = `url('${backgrounds[currentBg]}')`;
+document.body.style.backgroundSize = "cover";
+document.body.style.backgroundRepeat = "no-repeat";
+document.body.style.backgroundPosition = "center";
 
 bgBtn.addEventListener("click", () => {
   currentBg = (currentBg + 1) % backgrounds.length;
